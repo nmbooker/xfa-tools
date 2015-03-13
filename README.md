@@ -5,6 +5,18 @@ This is aimed at developers who wish to develop a parser for XFA,
 or at users who want to get what data they can out in a
 format that can be read in a text editor.
 
+## Dependencies
+
+These are the right instructions for Arch or Parabola GNU/Linux.
+Note you need python2 for this, for pdfminer to work.
+
+```
+% sudo pacman -Ss python2 python2-pip
+% sudo pip2 install pdfminer
+```
+
+I recommend you install `jq` from the AUR too.
+
 ## xfa-extract
 
 Takes PDF filename on command line, and extracts the XFA data as
