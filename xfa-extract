@@ -1,0 +1,47 @@
+#! /usr/bin/env python2
+
+"""Extract all the XFA bits from a PDF file, and stuff in a directory.
+"""
+
+import sys
+import argparse
+import os
+import json
+
+from pdfminer import pdfparser, pdfdocument
+from xfa_tools.xfaget import (
+    acroform, xfa, xfa_alist, stream_raw_data,
+)
+
+def main(options):
+    """Main program."""
+    pdf_filename = options.pdf_filename
+    with open(pdf_filename, 'rb') as pdf_file:
+        parser = pdfparser.PDFParser(pdf_file)
+        document = pdfdocument.PDFDocument(parser)
+        generate_xfa_stuff(document)
+    return
+
+def generate_xfa_stuff(document):
+    json.dump(
+        [
+            (k, stream_raw_data(v))
+            for (k,v)
+            in xfa_alist(xfa(acroform(document)))
+        ],
+        sys.stdout, indent=4,
+    )
+
+def get_options():
+    """Get options for the script."""
+    parser = argparse.ArgumentParser(
+        description="Dump XFA stuff into a dictionary of files.",
+    )
+    # parser.add_argument() calls here
+    parser.add_argument('pdf_filename')
+    options = parser.parse_args()
+    # extra processing of options here
+    return options
+
+if __name__ == "__main__":
+    main(get_options())
