@@ -1,6 +1,6 @@
 #! /usr/bin/env python2
 
-"""Extract all the XFA bits from a PDF file, and stuff in a directory.
+"""Extract all the XFA bits from a PDF file, as alist, in JSON.
 """
 
 import sys
@@ -35,7 +35,7 @@ def generate_xfa_stuff(document):
 def get_options():
     """Get options for the script."""
     parser = argparse.ArgumentParser(
-        description="Dump XFA stuff into a dictionary of files.",
+        description="Dump XFA stuff into an alist represented in JSON.",
     )
     # parser.add_argument() calls here
     parser.add_argument('pdf_filename')
